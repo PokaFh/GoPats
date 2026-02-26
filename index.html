@@ -1,0 +1,543 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GO PATS | Cuidado Premium</title>
+  <meta name="description" content="GO PATS ofrece paseos y cuidado premium para mascotas con una experiencia moderna y confiable." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07141f;
+      --glass: rgba(13, 28, 40, 0.5);
+      --line: rgba(255, 255, 255, 0.22);
+      --text: #f4f8fc;
+      --muted: #c8d7e6;
+      --accent: #35e0b0;
+      --accent-2: #29b4ff;
+      --shadow: 0 18px 45px rgba(4, 9, 14, 0.35);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .floating-nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-18px) scale(0.97);
+      width: min(calc(100% - 24px), 980px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-radius: 16px;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      z-index: 20;
+    }
+
+    body.scrolled .floating-nav {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-links a { transition: color 0.22s ease; }
+    .nav-links a:hover { color: #ffffff; }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 24px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      transform-origin: center;
+      will-change: transform;
+      background: url("https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=2400&q=80") center/cover no-repeat;
+    }
+
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(5, 10, 17, 0.35) 0%, rgba(5, 10, 17, 0.82) 82%);
+    }
+
+    .hero-orb {
+      position: absolute;
+      width: 36vw;
+      height: 36vw;
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.22;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .orb-left { left: -10vw; top: -8vw; background: #2af8cc; }
+    .orb-right { right: -12vw; bottom: -8vw; background: #2497ff; }
+
+    .hero-content { text-align: center; max-width: 900px; padding: 12px; }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 11vw, 8.6rem);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      will-change: transform;
+    }
+
+    body.scrolled .hero-title {
+      transform: translateY(-28vh) scale(0.45);
+      opacity: 0.14;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.8vw, 1.45rem);
+      color: #f2f7ff;
+      max-width: 670px;
+      margin: 0 auto 30px;
+    }
+
+    .cta-btn,
+    .btn-main,
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+    }
+
+    .cta-btn {
+      padding: 14px 30px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #041620;
+      box-shadow: 0 12px 26px rgba(21, 183, 160, 0.35);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 18px 36px rgba(13, 208, 181, 0.42);
+    }
+
+    .section {
+      position: relative;
+      width: min(calc(100% - 24px), var(--max));
+      margin: 0 auto 30px;
+      padding: 58px 34px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: linear-gradient(150deg, rgba(11, 28, 41, 0.74), rgba(8, 19, 29, 0.64));
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 45%);
+    }
+
+    .section h2 {
+      font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .section p.lead {
+      color: var(--muted);
+      margin-bottom: 28px;
+      max-width: 700px;
+    }
+
+    .services-bg,
+    .contact-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;
+      transform: scale(1.05);
+      filter: saturate(0.95);
+    }
+
+    .services-bg {
+      background-image: url("https://images.unsplash.com/photo-1525253086316-d0c936c814f8?auto=format&fit=crop&w=2200&q=80");
+    }
+
+    .contact-bg {
+      background-image: url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=2200&q=80");
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      padding: 24px;
+      border-radius: 20px;
+      background: rgba(13, 30, 44, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      min-height: 170px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(53, 224, 176, 0.65);
+      box-shadow: 0 18px 30px rgba(18, 224, 189, 0.16);
+    }
+
+    .card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+
+    .price {
+      color: #9ef5df;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card p { color: var(--muted); font-size: 0.95rem; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .feature {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(11, 26, 39, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .feature .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      background: rgba(53, 224, 176, 0.12);
+      border: 1px solid rgba(53, 224, 176, 0.3);
+      color: #baf6e9;
+    }
+
+    .feature h3 { margin-bottom: 6px; font-size: 1.1rem; }
+    .feature p { color: var(--muted); font-size: 0.95rem; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .contact-card {
+      padding: 24px;
+      border-radius: 20px;
+      background: rgba(8, 20, 31, 0.74);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .contact-line { color: var(--muted); margin-bottom: 8px; }
+    .contact-phone { font-size: 1.8rem; font-weight: 700; margin-bottom: 16px; }
+
+    .btn-main {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px 20px;
+      background: linear-gradient(120deg, #37dfb3, #23a9ff);
+      color: #061723;
+      box-shadow: 0 10px 24px rgba(24, 167, 201, 0.35);
+    }
+
+    .btn-main:hover { transform: translateY(-2px); }
+
+    .btn-wa {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 20px;
+      color: #d9ffee;
+      background: rgba(19, 46, 43, 0.68);
+      border-color: rgba(72, 231, 146, 0.45);
+    }
+
+    .btn-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(72, 231, 146, 0.18);
+    }
+
+    .whatsapp-fab {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #34e98f, #18b76c);
+      box-shadow: 0 16px 30px rgba(20, 146, 84, 0.42);
+      z-index: 30;
+      animation: float 2.8s ease-in-out infinite;
+      transition: transform 0.22s ease;
+    }
+
+    .whatsapp-fab:hover { transform: translateY(-4px) scale(1.06); }
+
+    .whatsapp-fab svg {
+      width: 30px;
+      height: 30px;
+      fill: #ffffff;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px) scale(0.98);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    footer {
+      text-align: center;
+      color: rgba(226, 238, 249, 0.72);
+      padding: 16px 14px 30px;
+      font-size: 0.9rem;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 980px) {
+      .cards,
+      .features,
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .hero { min-height: 600px; }
+    }
+
+    @media (max-width: 720px) {
+      .floating-nav {
+        width: calc(100% - 16px);
+        top: 8px;
+        padding: 12px 14px;
+      }
+
+      .nav-links {
+        gap: 12px;
+        font-size: 0.8rem;
+      }
+
+      .section {
+        padding: 42px 18px;
+        margin-bottom: 16px;
+      }
+
+      .cards,
+      .features { grid-template-columns: 1fr; }
+
+      .hero-title { letter-spacing: 0.06em; }
+
+      body.scrolled .hero-title {
+        transform: translateY(-24vh) scale(0.48);
+      }
+
+      .hero-subtitle { margin-bottom: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="floating-nav" aria-label="Navegacion principal">
+    <a class="brand" href="#hero">GO PATS</a>
+    <nav class="nav-links">
+      <a href="#services">Servicios</a>
+      <a href="#prices">Precios</a>
+      <a href="#contact">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-orb orb-left"></div>
+      <div class="hero-orb orb-right"></div>
+      <div class="hero-content reveal show">
+        <h1 class="hero-title">GO PATS</h1>
+        <p class="hero-subtitle">El mejor cuidado para tu mejor amigo</p>
+        <a class="cta-btn" href="#contact">Reservar ahora</a>
+      </div>
+    </section>
+
+    <section class="section reveal" id="services">
+      <div class="services-bg" aria-hidden="true"></div>
+      <h2>Servicios</h2>
+      <p class="lead">Paseos y cuidado diario diseñados para familias que buscan una experiencia segura, puntual y profesional.</p>
+      <div class="cards" id="prices">
+        <article class="card">
+          <h3>Paseo 30 min</h3>
+          <p class="price">5 EUR</p>
+          <p>Salida corta para activar, socializar y mantener rutina.</p>
+        </article>
+        <article class="card">
+          <h3>Paseo 1 hora</h3>
+          <p class="price">8 EUR</p>
+          <p>Paseo completo con juego y seguimiento en tiempo real.</p>
+        </article>
+        <article class="card">
+          <h3>Premium</h3>
+          <p class="price">12 EUR</p>
+          <p>Atencion extendida, reporte personalizado y prioridad horaria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="why">
+      <h2>Por que elegir GO PATS</h2>
+      <p class="lead">Combinamos tecnologia, procesos claros y trato cercano para que cada paseo sea impecable.</p>
+      <div class="features">
+        <article class="feature">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4Zm0 3.2 6 2.7v4.1c0 3.8-2.6 7.5-6 8.7-3.4-1.2-6-4.9-6-8.7V6.9l6-2.7Zm-1.1 10.9-2.5-2.5-2.1 2.1 4.6 4.6 6.8-6.8-2.1-2.1-4.7 4.7Z"/></svg>
+          </div>
+          <h3>Seguro</h3>
+          <p>Protocolos de cuidado y seguimiento para cada mascota.</p>
+        </article>
+        <article class="feature">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm5 8.6-5.7 5.7a1 1 0 0 1-1.4 0l-2.9-2.9 1.4-1.4 2.2 2.2 5-5 1.4 1.4Z"/></svg>
+          </div>
+          <h3>Confiable</h3>
+          <p>Puntualidad, comunicacion clara y servicio consistente.</p>
+        </article>
+        <article class="feature">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 21c4.4 0 8-3.6 8-8 0-3.7-2.5-6.8-6-7.7V4a2 2 0 1 0-4 0v1.3C6.5 6.2 4 9.3 4 13c0 4.4 3.6 8 8 8Zm-2-8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm4 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>
+          </div>
+          <h3>Amigable</h3>
+          <p>Equipo cercano y entrenado para generar confianza real.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="contact">
+      <div class="contact-bg" aria-hidden="true"></div>
+      <h2>Contacto</h2>
+      <p class="lead">Agenda en segundos y recibe confirmacion inmediata.</p>
+      <div class="contact-grid">
+        <article class="contact-card">
+          <p class="contact-line">Telefono</p>
+          <p class="contact-phone">+34 611360156</p>
+          <p class="contact-line">Atencion de lunes a domingo</p>
+        </article>
+        <article class="contact-card">
+          <a class="btn-wa" href="https://wa.me/34611360156" target="_blank" rel="noopener noreferrer">Escribir por WhatsApp</a>
+          <a class="btn-main" href="https://wa.me/34611360156" target="_blank" rel="noopener noreferrer">Reservar ahora</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <a class="whatsapp-fab" href="https://wa.me/34611360156" target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 2.3 18.1L1 23l5.1-1.3a11.8 11.8 0 0 0 5.6 1.4h.1a11.8 11.8 0 0 0 8.7-19.6Zm-8.7 17.6a9.9 9.9 0 0 1-5-1.4l-.4-.2-3 .8.8-2.9-.2-.4a10 10 0 1 1 7.8 4.1Zm5.4-7.4c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1l-.6.8c-.2.2-.3.2-.6.1a8.1 8.1 0 0 1-2.4-1.5 8.9 8.9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.4.3-.5a.7.7 0 0 0 0-.6c-.1-.1-.7-1.7-1-2.3-.2-.5-.5-.4-.7-.4h-.6a1.2 1.2 0 0 0-.9.4A3.6 3.6 0 0 0 6 8.5c0 1 .7 2.1.8 2.2a13.6 13.6 0 0 0 5.2 4.8c1.8.8 2.5.9 3.4.8.5-.1 1.8-.7 2-1.4.3-.6.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/></svg>
+  </a>
+
+  <footer>(c) 2026 GO PATS. Cuidado profesional para mascotas.</footer>
+
+  <script>
+    const body = document.body;
+    const heroBg = document.getElementById("heroBg");
+    const revealItems = document.querySelectorAll(".reveal");
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      body.classList.toggle("scrolled", y > 80);
+
+      // Parallax suave del fondo principal.
+      heroBg.style.transform = `translateY(${y * 0.18}px) scale(1.08)`;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  </script>
+</body>
+</html>
+
+
